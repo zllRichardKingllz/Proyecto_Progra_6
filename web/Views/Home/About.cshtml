@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acerca de</title>
+    <link rel="stylesheet" href="~/Content/about.css" type="text/css" />
+</head>
+<body>
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "Index")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>                
+            </ul>
+        </header>
+        <section id="empresa">
+            <h1>¿Quienes somos?</h1>
+            <p>
+                DeLaHuerta es un emprendimiento familiar que trabaja todos los días
+                para acercarte productos frescos y de primera calidad. Nos dedicamos
+                exclusivamente a esto y tenemos la experiencia necesaria que nos
+                permite seleccionar diariamente los mejores productos de la temporada
+                para tenerlos a su disposición. Disponemos de una amplia variedad de
+                productos lo que asegura que siempre encontrará una alternativa
+                adecuada para su familia.
+            </p>
+            <h2>Misión</h2>
+            <p>
+                Nuestra misión es satisfacer las necesidades de todos nuestros
+                clientes así como también de nuestros trabajadores, con el objetivo de
+                maximizar la eficiencia y optimizar la rentabilidad a través de
+                nuestra diferenciación en calidad de producto, servicio y precio.
+            </p>
+            <h2>Visión</h2>
+            <p>
+                Nuestra visión es conseguir la confianza de nuestros clientes a través
+                de comercialización sobre productos de calidad, a partir de la cual,
+                afianzar un crecimiento progresivo y sostenido en el mercado nacional,
+                consolidando nuestra posición como empresa de referencia en el sector
+                con una imagen corporativa propia y diferenciada de sus competidores.
+                DeLaHuerta trabaja para conseguir la máxima calidad, un catálogo de
+                productos diversificado y el mejor servicio al precio más competitivo.
+            </p>
+        </section>
+        <section id="autor">
+            <h1>Autor</h1>
+            <h2 class="text">Nombre</h2>
+            <p class="text2">Richard Josué Conejo Berrocal.</p>
+            <h2 class="text">Cedula</h2>
+            <p class="text2">207870114</p>
+        </section>
+        <section id="direccion">
+            <h1>Contácto</h1>
+            <p class="text2">San Pedro de Poás, Alajuela.</p>
+            <h2 class="text">Correo</h2>
+            <p class="text2" id="email">conejorichard1998@gmail.com</p>
+            <h2 class="text">Teléfono</h2>
+            <p class="text2" id="telefono">88058073</p>
+        </section>
+    </main>
+</body>
+</html>

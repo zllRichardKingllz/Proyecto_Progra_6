@@ -1,0 +1,306 @@
+﻿@model Infraestructure.Models.Producto
+
+
+@{
+    ViewBag.Title = "_MantenimientoProductosEditar";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mantenimiento Producto</title>
+    <link rel="stylesheet" href="~/Content/mantProducto.css" type="text/css">
+    <style>
+        .nav {
+            background-color: #238926;
+            border-radius: 4px;
+            font-size: 24px;
+            margin-top: 5%;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        .nav > li {
+            float: left;
+        }
+
+        .nav li a {
+            background-color: #238926;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 12px;
+            display: block;
+        }
+
+            .nav li a:hover {
+                text-decoration: none;
+                background-color: greenyellow;
+            }
+
+        .nav li ul {
+            display: none;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .nav li:hover > ul {
+            display: block;
+            margin-left: -40px !important;
+        }
+
+        .nav li ul li {
+            position: relative;
+            font-size: 16px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            width: 180px;
+        }
+
+        #usuario {
+            margin-left: 82%;
+        }
+
+            #usuario ul li {
+                font-size: 14px;
+                width: 120px;
+            }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <center><h1>Formulario</h1></center>
+            <center>
+                <p>
+                    Acá podrás editar productos ya ingresados con anterioridad.
+                </p>
+            </center>
+            <center>
+                @using (Html.BeginForm("GuardarProducto", "Producto", FormMethod.Post))
+                {
+                <form id="formProd">
+                    @Html.AntiForgeryToken()
+                    <label for="idProducto">Codigo Producto</label>
+                    <div>
+                        @Html.EditorFor(model => model.idProducto, new { htmlAttributes = new { @class = "form-control", @id = "idProducto", @name = "idProducto", @Type = "text", style = "width: 60%; text-align: center;", @readonly = "readonly" } })
+                    </div>
+                    <label for="idBotanica">Botánica</label>
+                    <div>
+                        @Html.DropDownListFor(model => model.idBotanica, (SelectList)ViewBag.IDBOTANICA, "-- Selecciona botanica --", new { @class = "form-control", @id = "idBotanica", @name = "idBotanica", style = "width: 60%; text-align: center;" })
+                    </div>
+                    <label for="nombre">Nombre Producto</label>
+                    <div>
+                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @id = "nombre", @name = "nombre", style = "width: 60%; text-align: center;" } })
+                    </div>
+                    <label for="descripcion">Descripción Producto</label>
+                    <div>
+                        @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control", @id = "descripcion", @name = "descripcion", style = "width: 60%; text-align: center;" } })
+                    </div>
+                    <label for="costoUnitario">Costo unitario</label>
+                    <div>
+                        @Html.EditorFor(model => model.costoUnitario, new { htmlAttributes = new { @class = "form-control", @id = "costoUnitario", @name = "costoUnitario", @Type = "text", style = "width: 60%; text-align: center;" } })
+                    </div>
+                    <label for="cantidadMinima">Cantidad minima</label>
+                    <div>
+                        @Html.EditorFor(model => model.cantidadMinima, new { htmlAttributes = new { @class = "form-control", @id = "cantidadMinima", @name = "cantidadMinima", @Type = "text", style = "width: 60%; text-align: center;" } })
+                    </div>
+                    <label for="cantidadTotal">Cantidad total</label>
+                    @Html.EditorFor(model => model.cantidadTotal, new { htmlAttributes = new { @class = "form-control", @id = "cantidadTotal", @name = "cantidadTotal", @Type = "text", style = "width: 60%; text-align: center;" } })
+                    <label for="activo" hidden>Activo</label>
+                    @Html.EditorFor(model => model.activo, new { htmlAttributes = new { @class = "form-control", @id = "activo", @name = "activo", @Type = "number", @style = "display: none;" } })
+                    <p style="color: lawngreen; display: none" id="msg">Datos correctos, presiona nuevamente confirmar</p>
+                    <input type="hidden" value="1" name="editar" id="editar" />
+                    <div id="divBtn" style="margin-top:2%;">
+                        <button type="button" style="margin-bottom: 3%; font-size: 24px; width: 20%;" onclick="location.href = '@Url.Action("listadoProducto", "Producto")'" id="btnRegresar">Regresar</button>
+                        <button type="button" style="margin-bottom: 3%; font-size: 24px; width: 20%;" onclick="limpiar()" id="btnEditar">Limpiar</button>
+                        <button type="button" style="font-size: 24px; width: 20%;" onclick="validaciones()" id="btnConfirmar">Validar</button>
+                        <button type="submit" style="font-size: 24px; width: 20%; display: none;" id="btnConfirmar2">Confirmar</button>
+                    </div>
+                </form>
+                }
+            </center>
+        </section>
+    </main>
+    <script>
+        function validaciones() {
+            let btn1 = document.getElementById("btnConfirmar");
+            let btn2 = document.getElementById("btnConfirmar2");
+            let msg = document.getElementById("msg");
+            let cantidadTotal = document.getElementById("cantidadTotal");
+            let activo = document.getElementById("activo");
+
+            if (vacio() == false) {
+                swal({
+                    title: "¡Oops!",
+                    text: "¡Antes rellena todos los campos!",
+                    type: "error",
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: "OK",
+                });
+            } else {
+                if (numeros() == false) {
+                    swal({
+                        title: "¡Oops!",
+                        text: "¡Solo es posible agregar numeros en el código del producto, en el costo unitario y en la cantidad minima!",
+                        type: "error",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: "OK",
+                    });
+                } else {
+                    if (letras() == false) {
+                        swal({
+                            title: "¡Oops!",
+                            text: "¡Solo se permiten letras en el nombre y la descripción del producto!",
+                            type: "error",
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: "OK",
+                        });
+                    } else {
+                        if (combo() == false) {
+                            swal({
+                                title: "¡Oops!",
+                                text: "¡Antes selecciona una botánica!",
+                                type: "error",
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: "OK",
+                            });
+                        } else {
+                            btn1.style.display = "none";
+                            btn2.style.display = "inline";
+                            msg.style.display = "inline";
+                            cantidadTotal.value = 60;
+                            activo.value = 1;
+                        }
+                    }
+                }
+            }
+        }
+        function combo() {
+            let idBotanica = document.getElementById("idBotanica").value;
+
+            if (idBotanica == 0) {
+                return false;
+            }
+            return true;
+        }
+        function numeros() {
+            let idProducto = document.getElementById("idProducto").value;
+            let costoUnitario = document.getElementById("costoUnitario").value;
+            let cantidadMinima = document.getElementById("cantidadMinima").value;
+
+            if (isNaN(idProducto)) {
+                return false;
+            }
+            if (isNaN(costoUnitario)) {
+                return false;
+            }
+            if (isNaN(cantidadMinima)) {
+                return false;
+            }
+            return true;
+        }
+        function letras() {
+            let letras = /^[A-Z][a-zÁÉÍÓÚáéíóúñÑ\s]+$/i;
+            let nombre = document.getElementById("nombre").value;
+            let descripcion = document.getElementById("descripcion").value;
+
+            if (!letras.test(nombre)) {
+                return false;
+            }
+            if (!letras.test(descripcion)) {
+                return false;
+            }
+            return true;
+        }
+        function vacio() {
+            let idProducto = document.getElementById("idProducto").value;
+            let nombre = document.getElementById("nombre").value;
+            let descripcion = document.getElementById("descripcion").value;
+            let costoUnitario = document.getElementById("costoUnitario").value;
+            let cantidadMinima = document.getElementById("cantidadMinima").value;
+
+            if (idProducto == null || idProducto.length == 0) {
+                return false;
+            }
+            if (nombre == null || nombre.length == 0) {
+                return false;
+            }
+            if (descripcion == null || descripcion.length == 0) {
+                return false;
+            }
+            if (costoUnitario == null || costoUnitario.length == 0) {
+                return false;
+            }
+            if (cantidadMinima == null || cantidadMinima.length == 0) {
+                return false;
+            }
+            return true;
+        }
+        function limpiar() {
+            let idBotanica = document.getElementById("idBotanica");
+            let nombre = document.getElementById("nombre");
+            let descripcion = document.getElementById("descripcion");
+            let costoUnitario = document.getElementById("costoUnitario");
+            let cantidadMinima = document.getElementById("cantidadMinima");
+            let cantidadTotal = document.getElementById("cantidadTotal");
+            let activo = document.getElementById("activo");
+
+            idBotanica.value = "";
+            nombre.value = "";
+            descripcion.value = "";
+            costoUnitario.value = "";
+            cantidadMinima.value = "";
+            cantidadTotal.value = "";
+            activo.value = "";
+        }
+    </script>
+</body>
+</html>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

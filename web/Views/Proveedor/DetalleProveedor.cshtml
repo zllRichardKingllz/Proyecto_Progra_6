@@ -1,0 +1,154 @@
+﻿@model Infraestructure.Models.Proveedor
+
+@{
+    ViewBag.Title = "DetalleProveedor";
+    var agen = "";
+    var producto = "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Detalle proveedor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/DetalleProveedores.css" type="text/css">
+</head>
+<body>
+
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "index", "home")</li>
+                <li>@Html.ActionLink("Proveedores", "Proveedores", "Proveedor")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <div>
+                <center>
+                    <h1>@Html.DisplayFor(model => model.nombre)</h1>
+                </center>
+                <hr />
+                <dl>
+                    <dt>
+                        Codigo de proveedor
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.idProveedor)
+                    </dd>
+
+                    <dt>
+                        Compañia
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.nombre)
+                    </dd>
+
+                    <dt>
+                        Dirección
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.direccion)
+                    </dd>
+
+                    <dt>
+                        País
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.pais)
+                    </dd>
+                    <dt>
+                        Agente/es asociados
+                    </dt>
+
+                    <dd>
+                        @foreach (var p in Model.Agente)
+                        {
+                            if (Html.DisplayFor(model => model.idProveedor).ToString().Equals(p.idProveedor.ToString()))
+                            {
+                                foreach (var y in (SelectList)ViewBag.idAgen)
+                                {
+                                    if (p.idAgente.ToString().Equals(y.Value))
+                                    {
+                                        agen += y.Text + ". ";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                agen += "No hay agentes asociados";
+                            }
+                        }
+                        @agen
+                    </dd>
+                    <dt>
+                        Exporta
+                    </dt>
+
+                    <dd>
+                        @foreach (var p in Model.Producto_proveedor)
+                        {
+                            if (Html.DisplayFor(model => model.idProveedor).ToString().Equals(p.idProveedor.ToString()))
+                            {
+                                foreach (var x in (SelectList)ViewBag.idPr)
+                                {
+                                    if (p.idProducto.ToString().Equals(x.Value))
+                                    {
+                                        producto += x.Text + ". ";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                producto += "No hay productos asociados";
+                            }
+                        }
+                        @producto
+                    </dd>
+                </dl>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

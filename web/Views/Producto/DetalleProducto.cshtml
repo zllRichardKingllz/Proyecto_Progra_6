@@ -1,0 +1,190 @@
+﻿@model Infraestructure.Models.Producto
+
+@{
+    ViewBag.Title = "DetalleProducto";
+    var sucursal = "";
+    var botanica = "";
+    var proveedor = "";
+
+    //botanica
+    if (@Html.DisplayFor(model => model.Botanica.idBotanica).ToString().Equals("1"))
+    {
+        botanica = "Fruta";
+    }
+    else
+    {
+        if (@Html.DisplayFor(model => model.Botanica.idBotanica).ToString().Equals("2"))
+        {
+            botanica = "Verdura";
+        }
+        else
+        {
+            botanica = "No existe botanica";
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Detalle producto</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/DetalleProducto.css" type="text/css">
+</head>
+<body>
+
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "index", "home")</li>
+                <li>@Html.ActionLink("Productos", "Producto", "Producto")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <div>
+                <center>
+                    <h1>@Html.DisplayFor(model => model.nombre)</h1>
+                </center>
+                <hr />
+                <dl>
+                    <dt>
+                        Codigo de Producto
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.idProducto)
+                    </dd>
+
+                    <dt>
+                        Nombre
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.nombre)
+                    </dd>
+
+                    <dt>
+                        Botanica
+                    </dt>
+
+                    <dd>
+                        @botanica
+                    </dd>
+
+                    <dt>
+                        Descripción
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.descripcion)
+                    </dd>
+
+                    <dt>
+                        Costo unitario
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.costoUnitario)
+                    </dd>
+
+                    <dt>
+                        Cantidad total en inventario
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.cantidadTotal)
+                    </dd>
+
+                    <dt>
+                        Ubicacion/es
+                    </dt>
+
+                    <dd>
+                        @foreach (var u in Model.Ubicacion)
+                        {
+                            if (Html.DisplayFor(model => model.idProducto).ToString().Equals(u.idProducto.ToString()))
+                            {
+                                foreach (var x in (SelectList)ViewBag.idUbi)
+                                {
+                                    if (u.idSucursal.ToString().Equals(x.Value))
+                                    {
+                                        sucursal += x.Text + ". ";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                sucursal += "No hay ubicaciones asociadas";
+                            }
+                        }
+                        @sucursal
+                    </dd>
+                    <dt>
+                        Proveedor/es
+                    </dt>
+
+                    <dd>
+                        @foreach (var p in Model.Producto_proveedor)
+                        {
+                            if (Html.DisplayFor(model => model.idProducto).ToString().Equals(p.idProducto.ToString()))
+                            {
+                                foreach (var y in (SelectList)ViewBag.idProve)
+                                {
+                                    if (p.idProveedor.ToString().Equals(y.Value))
+                                    {
+                                        proveedor += y.Text + ". ";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                proveedor += "No hay ubicaciones asociadas";
+                            }
+                        }
+                        @proveedor
+                    </dd>
+
+                </dl>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Inventario</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/inventario.css" type="text/css">
+</head>
+<body>
+
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "index")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <center>
+                <div id="titulo">
+                    <h5 style="font-size: 1px; padding-bottom: 3%;">.</h5>
+                    <h1>Inventariado DeLaHuerta</h1>
+                    <p>Acá encontrarás todo lo relevante y referente sobre nuestros productos de primera mano.</p>
+                </div>
+            </center>
+            <!-- Productos -->
+                <div id="divProd" class="table">                    
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                            <tr style="background-color:#238926; color: #fff;">
+                                <th scope="col"><center>#</center></th>
+                                <th style="width:20%;" scope="col">Inventario de:</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col"><center>Enlace</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Productos</td>
+                                <td>Acá encontrarás todo lo referente a nuestros productos</td>
+                                <td><center><button type="button" onclick="location.href = '@Url.Action("Producto", "Producto")'">Vamos</button></center></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Proveedores</td>
+                                <td>Acá podrás observar todo lo relacionado con nuestros proveedores</td>
+                                <td><center><button type="button" onclick="location.href = '@Url.Action("Proveedores", "Proveedor")'">Vamos</button></center></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Movimientos</td>
+                                <td>Acá hallarás todos nuestros movimientos de inventario</td>
+                                <td><center><button type="button" onclick="location.href = '@Url.Action("Movimientos", "Movimientos")'">Vamos</button></center></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </section>
+    </main>
+</body>
+</html>

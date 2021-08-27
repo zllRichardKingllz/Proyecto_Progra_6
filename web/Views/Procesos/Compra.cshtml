@@ -1,0 +1,436 @@
+﻿@model Infraestructure.Models.DetMovimiento
+
+@{
+    ViewBag.Title = "Entrada";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceso de entradas</title>
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+        }
+
+        body {
+            background-image: url(https://cdn.wallpapersafari.com/83/63/IqE0SP.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-size: 18.5px;
+            color: #fff;
+        }
+
+        .nav {
+            background-color: #238926;
+            border-radius: 4px;
+            font-size: 24px;
+            margin-top: 5%;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        .nav > li {
+            float: left;
+        }
+
+        .nav li a {
+            background-color: #238926;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 12px;
+            display: block;
+        }
+
+            .nav li a:hover {
+                text-decoration: none;
+                background-color: greenyellow;
+            }
+
+        .nav li ul {
+            display: none;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .nav li:hover > ul {
+            display: block;
+        }
+
+        .nav li ul li {
+            position: relative;
+            font-size: 16px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            width: 180px;
+        }
+
+        #usuario {
+            margin-left: 70%;
+        }
+
+            #usuario ul li {
+                font-size: 14px;
+                width: 120px;
+            }
+
+        section {
+            background-color: rgba(0,0,0,0.2);
+            width: 100%;
+        }
+
+        form {
+            margin: 2%;
+            margin-left: 4%;
+            font-size: 14px;
+            margin-top: -0.2%;
+        }
+
+        article {
+            margin-left: 28%;
+            margin-top: -45%;
+            padding-bottom: 2%;
+            font-size: 20px;
+            padding-right: 3%;
+        }
+
+        #divBtn {
+            margin-left: 7%;
+        }
+
+        button {
+            font-size: 20px;
+            color: black;
+        }
+
+            button:hover {
+                background-color: aquamarine;
+            }
+
+        input {
+            height: 20px;
+            text-align: center !important;
+        }
+
+        select {
+            font-size: 20px;
+            color: black;
+            text-decoration-color: black;
+            text-align: center !important;
+        }
+
+        #divRegistro {
+            margin-left: 6%;
+        }
+
+        table {
+            color: black;
+            font-size: 15.1px;
+            text-align: center !important;
+        }
+
+        tr > th {
+            font-size: 18px;
+        }
+
+        .my-custom-scrollbar {
+            position: relative;
+            height: 460px;
+            width: 98%;
+            overflow: auto;
+        }
+
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) > td,
+        .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: #fff;
+        }
+
+        .table-striped > tbody > tr:nth-child(even) > td,
+        .table-striped > tbody > tr:nth-child(even) > th {
+            background-color: limegreen;
+        }
+
+        .table-striped > thead > tr > th {
+            background-color: limegreen;
+        }
+    </style>
+</head>
+<body onload="CONFIRMADO()">
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <center>
+                <h1>Formulario de compra</h1>
+                <p style="margin-top: -1%;">Acá podrás registrar las nuevas compras realizadas</p>
+            </center>
+            @using (Html.BeginForm("GuardarMovimiento", "Procesos", FormMethod.Post))
+            {
+                <form>
+                    @Html.AntiForgeryToken()
+                    <label for="">Usuario: </label>
+                    <div>
+                        @Html.EditorFor(model => model.idUsuario, new { htmlAttributes = new { @class = "form-control", @id = "idUsuario", @name = "idUsuario", @Type = "text", @style = "width: 26%;", @Value = @idUsuario, @readonly = "readonly" } })
+                    </div>
+                    <label for="">Fecha</label>
+                    <div>
+                        @Html.EditorFor(model => model.Movimiento.fecha, new { htmlAttributes = new { @class = "form-control", @id = "fecha", @name = "fecha", @type = "text", @style = "width: 26%;", @Value = DateTime.Now, @readonly = "readonly" } })
+                    </div>
+                    <label for="" hidden>Tipo de movimiento</label>
+                    <div>
+                        @Html.EditorFor(model => model.Movimiento.idTipoMovimiento, new { htmlAttributes = new { @class = "form-control", @id = "idTipoMovimiento", @name = "idTipoMovimiento", @Type = "text", @style = "width: 26%; display: none;" } })
+                        @Html.EditorFor(model => model.Movimiento.idConcepto, new { htmlAttributes = new { @class = "form-control", @id = "idConcepto", @name = "idConcepto", @Type = "text", @style = "width: 26%; display: none;" } })
+                    </div>
+                    <label for="">Proveedor</label>
+                    <div>
+                        @Html.DropDownListFor(model => model.idProveedor, (SelectList)ViewBag.IDPROVEDOR, "-- Selecciona proveedor --", new { @class = "form-control", @id = "idProveedor", @name = "idProveedor", @style = "width: 26%;" })
+                    </div>
+                    <label for="">Producto</label>
+                    <div>
+                        @Html.DropDownListFor(model => model.idProducto, (SelectList)ViewBag.IDPRODUCTO, "-- Selecciona producto --", new { @class = "form-control", @id = "idProducto", @name = "idProducto", @style = "width: 26%;" })
+                    </div>
+                    <label for="">Cantidad</label>
+                    <div>
+                        @Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", @id = "cantidad", @name = "cantidad", @Type = "text", @style = "width: 26%;" } })
+                    </div>
+                    <label for="">Ubicacion</label>
+                    <div>
+                        @Html.DropDownListFor(model => model.idSucursal, (SelectList)ViewBag.IDSUCURSAL, "-- Selecciona sucursal --", new { @class = "form-control", @id = "idSucursal", @name = "idSucursal", @style = "width: 26%;" })
+                    </div>
+                    <label for="">Observaciones</label>
+                    <div>
+                        @Html.TextAreaFor(model => model.observacion, new { htmlAttributes = new { @class = "form-control", @id = "observacion", @name = "observacion", @style = "text-decoration-color: black !important;" }, @cols = "37", @rows = "2" })
+                    </div>
+                    <input type="hidden" value="0" name="numMov" id="numMov"/>
+                    <div id="divBtn" style="margin-top: 1%;">
+                        <button type="button" style="margin-bottom: 3%; font-size: 20px; width: 10%;" onclick="location.href = '@Url.Action("Entrada", "Procesos")'" id="btnRegresar">Regresar</button>
+                        <button type="button" style="font-size: 20px; width: 10%;" onclick="validaciones()" id="btnConfirmar">Validar</button>
+                        @*<button type="submit" style="font-size: 20px; width: 10%; display: none;" id="btnConfirmar2">Registrar</button>*@
+                        <button type="button" style="font-size: 20px; width: 10%; display: none;" id="btnConfirmar2" onclick="registrar()">Registrar</button>
+                    </div>
+                </form>
+            }
+            <article>
+                <div id="divRegistro" class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                            <tr style="color: rgba(0, 0, 0, 0.7);">
+                                <th style="width: 18%;"># Movimiento</th>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Observación</th>
+                            </tr>
+                        </thead>
+
+
+                        <tr>
+                            <td>1</td>
+                            <td>Compra</td>
+                            <td>11/05/2021</td>
+                            <td>Manzana</td>
+                            <td>7</td>
+                            <td>Se compran manzanas para la sucursal principal</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Compra</td>
+                            <td>15/06/2021</td>
+                            <td>Pera</td>
+                            <td>15</td>
+                            <td>Se compran peras para la sucursal de Cartado</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Devolución</td>
+                            <td>17/06/2021</td>
+                            <td>Papaya</td>
+                            <td>9</td>
+                            <td>Se devuelve 9 papayas por mal estado</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Traslado</td>
+                            <td>17/06/2021</td>
+                            <td>Zanahoria</td>
+                            <td>21</td>
+                            <td>Se trasladan zanahorias desde la principal</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Devolución</td>
+                            <td>20/06/2021</td>
+                            <td>Manzana</td>
+                            <td>5</td>
+                            <td>Se devuelve 9 manzanas por mal estado</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Traslado</td>
+                            <td>27/06/2021</td>
+                            <td>Melón</td>
+                            <td>3</td>
+                            <td>Se trasladan Melón desde la sucursal de San José</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Inventario inicial</td>
+                            <td>11/07/2021</td>
+                            <td>Tomate</td>
+                            <td>10</td>
+                            <td>Ingreso de tomates a la sucursal principal</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Inventario inicial</td>
+                            <td>11/07/2021</td>
+                            <td>Pera</td>
+                            <td>13</td>
+                            <td>Ingreso de pera a la sucursal principal</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Inventario inicial</td>
+                            <td>13/07/2021</td>
+                            <td>Manzana de agua</td>
+                            <td>30</td>
+                            <td>Ingreso de manzana de agua a la sucursal principal</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </article>
+            <button type="submit" style="font-size: 20px; width: 10%; margin-bottom: 1%; margin-top: -2%; margin-left: 89%;" id="btnConfirmar3" onclick="confirmar()">Confirmar</button>
+        </section>
+    </main>
+    <script>
+        function CONFIRMADO() {
+            let resp = "@((string)ViewBag.CONFIRMADO)";
+            let numMv = "@((string)ViewBag.ULTIMOMOVIMIENTO)";
+            let inputNumM = document.getElementById("numMov");
+            if (resp !== null && resp !== '') {
+                swal({
+                    title: "¡Enhorabuena!",
+                    text: "¡Transacción realizada con éxito!",
+                    type: "success",
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: "OK",
+                });
+            }
+            inputNumM.value = numMv;
+        }
+        function crearMov() {
+
+            var data = {
+                objMovimiento: {
+                    idTipoMovimiento: $("#idTipoMovimiento").val(),
+                    idConcepto: $("#idConcepto").val(),
+                    fecha: $("#fecha").val()
+                }
+            }
+                $.ajax({
+                    method: 'POST',
+                    url: '@Url.Action("crearMovimiento", "Procesos")',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                });
+        }
+        function validaciones() {
+            let btn1 = document.getElementById("btnConfirmar");
+            let btn2 = document.getElementById("btnConfirmar2");
+            let idTipoMovimiento = document.getElementById("idTipoMovimiento");
+            let idConcepto = document.getElementById("idConcepto");
+
+            //if (vacio() == false) {
+            //    alert("Antes rellena todos los campos");
+            //} else {
+            //    if (numeros() == false) {
+            //        alert("Solo es posible agregar numeros en el código del producto y en el costo");
+            //    } else {
+            //        if (letras() == false) {
+            //            alert("Solo se permiten letras en el nombre del producto");
+            //        } else {
+            //            if (combo() == false) {
+            //                alert("Antes selecciona la botánica y el tipo");
+            //            } else {
+            btn1.style.display = "none";
+            btn2.style.display = "inline";
+            idTipoMovimiento.value = 1;
+            idConcepto.value = 1;
+            //            }
+            //        }
+            //    }
+            //}
+        }
+        function registrar() {
+            let btn1 = document.getElementById("btnConfirmar");
+            let btn2 = document.getElementById("btnConfirmar2");
+            alert("Registrado en cola con éxito");
+            btn1.style.display = "inline";
+            btn2.style.display = "none";
+            crearMov();
+        }
+        function confirmar() {
+            let btn1 = document.getElementById("btnConfirmar");
+            let btn2 = document.getElementById("btnConfirmar2");
+            alert("Guardado satisfactoriamente");
+            btn1.style.display = "inline";
+            btn2.style.display = "none";
+        }
+    </script>
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

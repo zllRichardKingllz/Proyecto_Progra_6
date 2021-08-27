@@ -1,0 +1,21 @@
+﻿*{
+    margin: 0%;
+    padding: 0%;
+}
+body {
+    background-image: url(https://zestfoodservice.co.uk/wp-content/uploads/2018/01/zest-produce-header-image-01-1.jpg);
+    color: #fff !important;
+    font-size: 40px !important;
+}
+#form {
+    margin-left: 30% !important;
+    margin-top: 28% !important;
+}
+#registrarse {
+    text-decoration: none;
+    font-size: 25px;
+    color: aqua;
+}
+#registrarse:hover{
+    color:deepskyblue;
+}

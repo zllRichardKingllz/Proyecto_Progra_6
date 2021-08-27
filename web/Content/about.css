@@ -1,0 +1,92 @@
+﻿body {
+    background-image: url(https://images2.alphacoders.com/101/1015273.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: aqua;
+}
+
+p {
+    font-size: 17px;
+    margin: 1%;
+}
+
+h1 {
+    font-size: 30px;
+    background-color: #019eb7;
+    width: 100%;
+    color: black;
+    text-align: center;
+    margin-bottom: 1%;
+}
+
+#autor {
+    background-color: rgba(0, 0, 0, 0.47);
+    width: 45%;
+    margin-left: 3%;
+    padding-bottom: 2%;
+}
+
+#empresa {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.47);
+}
+
+#direccion {
+    margin-left: 52%;
+    margin-top: -22.1%;
+    width: 45%;
+    background-color: rgba(0, 0, 0, 0.47);
+}
+#autor > p {
+    font-size: 16px;
+}
+#direccion > p {
+    font-size: 16px;
+}
+.nav {
+    background-color: #019eb7;
+    border-radius: 4px;
+    font-size: 24px;
+    margin-top: 3%;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.nav > li {
+    float: left;
+}
+
+.nav li a {
+    background-color: #019eb7;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 12px;
+    display: block;
+}
+
+    .nav li a:hover {
+        text-decoration: none;
+        background-color: greenyellow;
+    }
+
+.nav li ul {
+    display: none;
+    position: absolute;
+}
+
+.nav li:hover > ul {
+    display: block;
+}
+
+.nav li ul li {
+    position: relative;
+    width: 200px;
+    margin-left: -20%;
+    font-size: 16px;
+    border-style: solid;
+} 
+#usuario{
+    float: right;
+}

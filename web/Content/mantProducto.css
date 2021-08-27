@@ -1,0 +1,21 @@
+﻿body {
+    background-image: url(http://1.bp.blogspot.com/-i94uQHrFc-o/UrCpyUJYMcI/AAAAAAAAU3g/uW-lU-oByX8/s1600/frutas-en-canastas.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    font-size: 24px;
+}
+
+section {
+    margin-left: 23%;
+    background-color: rgba(70, 52, 0, 0.8);
+    width: 60%;
+}
+label {
+    color: #fff;
+}
+h1 {
+    color: #fff;
+}
+p {
+    color: #fff;
+}

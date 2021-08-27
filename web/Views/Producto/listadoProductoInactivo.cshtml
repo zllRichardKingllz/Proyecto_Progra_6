@@ -1,0 +1,250 @@
+﻿@model IEnumerable<Infraestructure.Models.Producto>
+
+@{
+    ViewBag.Title = "listadoProducto";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mantenimiento Producto</title>
+    <style>
+        body {
+            background-image: url(http://1.bp.blogspot.com/-i94uQHrFc-o/UrCpyUJYMcI/AAAAAAAAU3g/uW-lU-oByX8/s1600/frutas-en-canastas.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-size: 18.5px;
+        }
+
+        section {
+            background-color: rgba(0,0,0,0.4);
+            width: 100%;
+            padding-bottom: 1.5%;
+        }
+
+        label {
+            color: #fff;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        p {
+            color: #fff;
+        }
+
+        .nav {
+            background-color: #238926;
+            border-radius: 4px;
+            font-size: 24px;
+            margin-top: 5%;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        .nav > li {
+            float: left;
+        }
+
+        .nav li a {
+            background-color: #238926;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 12px;
+            display: block;
+        }
+
+            .nav li a:hover {
+                text-decoration: none;
+                background-color: greenyellow;
+            }
+
+        .nav li ul {
+            display: none;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .nav li:hover > ul {
+            display: block;
+            margin-left: -40px !important;
+        }
+
+        .nav li ul li {
+            position: relative;
+            font-size: 16px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            width: 180px;
+        }
+
+        #usuario {
+            margin-left: 82%;
+        }
+
+            #usuario ul li {
+                font-size: 14px;
+                width: 120px;
+            }
+
+        .my-custom-scrollbar {
+            position: relative;
+            height: 520px;
+            width: 98%;
+            overflow: auto;
+        }
+
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) > td,
+        .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: #fff;
+        }
+
+        .table-striped > tbody > tr:nth-child(even) > td,
+        .table-striped > tbody > tr:nth-child(even) > th {
+            background-color: limegreen;
+        }
+
+        .table-striped > thead > tr > th {
+            background-color: limegreen;
+        }
+    </style>
+</head>
+<body onload="CONFIRMADO()">
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <center><h1>Listado productos inactivos</h1></center>
+            <p style="margin-left: 1%;">
+                @Html.ActionLink("Regresar", "listadoProducto", "Producto", htmlAttributes: new { @class = "btn btn-primary", @style= "margin-left: 91.5%;" })
+            </p>
+            <center>
+                <div id="divProd" class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-bordered table-striped mb-0" style="text-align: center;">
+                        <thead>
+                            <tr style="color: rgba(0,0,0,0.7);">
+                                <th>
+                                    @Html.DisplayNameFor(model => model.idProducto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Botanica.descripcion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.descripcion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.costoUnitario)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.cantidadTotal)
+                                </th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model)
+                        {
+
+                            if (item.activo == 0)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.idProducto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Botanica.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </td>
+                                    <td style="font-size: 14px;">
+                                        @Html.DisplayFor(modelItem => item.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.costoUnitario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.cantidadTotal)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Activar", "Activar", new { id = item.idProducto })
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </table>
+                </div>
+            </center>
+        </section>
+    </main>   
+    <script>
+        function CONFIRMADO() {
+        let resp = "@((string)ViewBag.CONFIRMADO)";
+            if (resp !== null && resp !== '') {
+                swal({
+                    title: "¡Enhorabuena!",
+                    text: "¡Transacción realizada con éxito!",
+                    type: "success",
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: "OK",
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

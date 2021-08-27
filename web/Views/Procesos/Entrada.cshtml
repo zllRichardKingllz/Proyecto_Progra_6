@@ -1,0 +1,208 @@
+﻿@model IEnumerable<Infraestructure.Models.DetMovimiento>
+
+@{
+    ViewBag.Title = "Proceso entrada";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Proceso entrada</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url(https://cdn.wallpapersafari.com/83/63/IqE0SP.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-size: 18.5px;
+        }
+
+        section {
+            background-color: rgba(0,0,0,0.1);
+            width: 100%;
+            padding-bottom: 1.5%;
+        }
+
+        label {
+            color: #fff;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        p {
+            color: #fff;
+        }
+
+        .nav {
+            background-color: #238926;
+            border-radius: 4px;
+            font-size: 24px;
+            margin-top: 5%;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        .nav > li {
+            float: left;
+        }
+
+        .nav li a {
+            background-color: #238926;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 12px;
+            display: block;
+        }
+
+            .nav li a:hover {
+                text-decoration: none;
+                background-color: greenyellow;
+            }
+
+        .nav li ul {
+            display: none;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .nav li:hover > ul {
+            display: block;
+            margin-left: -40px !important;
+        }
+
+        .nav li ul li {
+            position: relative;
+            font-size: 16px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            width: 180px;
+        }
+
+        #usuario {
+            margin-left: 82%;
+        }
+
+            #usuario ul li {
+                font-size: 14px;
+                width: 120px;
+            }
+
+        .my-custom-scrollbar {
+            position: relative;
+            height: 500px;
+            width: 50%;
+            overflow: auto;
+        }
+
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) > td,
+        .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: #fff;
+        }
+
+        .table-striped > tbody > tr:nth-child(even) > td,
+        .table-striped > tbody > tr:nth-child(even) > th {
+            background-color: limegreen;
+        }
+
+        .table-striped > thead > tr > th {
+            background-color: limegreen;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <center>
+                <div id="titulo">
+                    <h1>Procesos entrada</h1>
+                    <p>Elige el tipo de entrada que deseas efectuar.</p>
+                </div>
+            </center>
+            <center>
+                <div id="divProd" class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-bordered table-striped mb-0" style="text-align: center;">
+                        <thead>
+                            <tr style="color: rgba(0,0,0,0.7);">
+                                <th scope="col">Proceso de:</th>
+                                <th scope="col"><center>Enlace</center></th>
+                            </tr>
+                        </thead>
+
+                        <tr>
+                            <td>Inventario inicial</td>
+                            <td><center><button type="button" onclick="location.href = '@Url.Action("Producto", "Producto")'">Vamos</button></center></td>
+                        </tr>
+
+                        <tr>
+                            <td>Compra</td>
+                            <td><center><button type="button" onclick="location.href = '@Url.Action("Compra", "Procesos")'">Vamos</button></center></td>
+                        </tr>
+                        <tr>
+                            <td>Devolución</td>
+                            <td><center><button type="button" onclick="location.href = '@Url.Action("Producto", "Producto")'">Vamos</button></center></td>
+                        </tr>
+                        <tr>
+                            <td>Entrada por ajuste a inventario</td>
+                            <td><center><button type="button" onclick="location.href = '@Url.Action("Producto", "Producto")'">Vamos</button></center></td>
+                        </tr>
+                        <tr>
+                            <td>Entrada por traspaso</td>
+                            <td><center><button type="button" onclick="location.href = '@Url.Action("Producto", "Producto")'">Vamos</button></center></td>
+                        </tr>
+                    </table>
+                </div>
+            </center>
+        </section>
+    </main>
+</body>
+</html>

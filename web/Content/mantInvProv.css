@@ -1,0 +1,28 @@
+﻿body {
+    background-image: url(https://s1.1zoom.me/big0/58/196393-Soverein.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    font-size: 18px;
+}
+
+section {
+    margin-left: 20%;
+    background-color: rgba(0, 95, 47, 0.8);
+    width: 60%;
+}
+
+h1 {
+    color: #fff;
+}
+
+p {
+    color: #fff;
+}
+
+label {
+    color: #fff;
+}
+
+#idAgente {
+    margin-bottom: 3%;
+}

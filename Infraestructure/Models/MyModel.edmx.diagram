@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="17179799f676452fa3ff1f1d60c72d37" Name="Diagram1">
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Agente" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Botanica" Width="1.5" PointX="1.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.DetMovimiento" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Movimiento" Width="1.5" PointX="3.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Producto" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Producto_proveedor" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Proveedor" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.RegistroMovimiento" Width="1.5" PointX="6" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Rol" Width="1.5" PointX="1.5" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Sucursal" Width="1.5" PointX="3.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.TipoMovimiento" Width="1.5" PointX="1.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Ubicacion" Width="1.5" PointX="6" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeLaHuertaDBModel.Usuario" Width="1.5" PointX="3.75" PointY="18.375" IsExpanded="true" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Agente_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Producto_Botanica" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_DetMovimiento_Movimiento1" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_DetMovimiento_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_DetMovimiento_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_DetMovimiento_Sucursal" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_DetMovimiento_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Movimiento_TipoMovimiento" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_RegistroMovimiento_Movimiento" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Inventario_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Ubicacion_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Inventario_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Usuario_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="DeLaHuertaDBModel.FK_Ubicacion_Sucursal" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

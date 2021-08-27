@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Infraestructure.Models.Producto>
+
+@{
+    ViewBag.Title = "Producto";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Inventario productos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/producto.css" type="text/css">
+</head>
+<body>
+
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "index", "home")</li>
+                <li>@Html.ActionLink("Inventario", "inventario", "home")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <div id="titulo">
+                <h1>Productos</h1>
+                <p>Deleitate con nuestra variedad</p>
+            </div>
+            <div id="divProd" class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr style="color: #fff;">
+                            <th>
+                                Producto
+                            </th>
+                            <th>
+                                Botánica
+                            </th>
+                            <th>
+                                Descripción
+                            </th>
+                            <th>
+                                Costo unitario
+                            </th>
+                            <th>
+                                <center>Opciones del producto</center>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Botanica.descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.descripcion)
+                            </td>
+                            <td>
+                                <center>@Html.DisplayFor(modelItem => item.costoUnitario)₡</center>
+                            </td>
+                            <td>
+                                <center style="font-size: 24px; color: black; border: solid 1px gray; border-radius: 4px; background-color: rgba(242, 242, 242, 1); padding-bottom: 1%; padding-top: 0.7%;">@Html.ActionLink("Detalle", "DetalleProducto", new { id = item.idProducto })</center>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DeLaHuertaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Agente">
+    <Key>
+      <PropertyRef Name="idAgente" />
+    </Key>
+    <Property Name="idAgente" Type="int" Nullable="false" />
+    <Property Name="idProveedor" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="telefono" Type="nvarchar" MaxLength="8" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Botanica">
+    <Key>
+      <PropertyRef Name="idBotanica" />
+    </Key>
+    <Property Name="idBotanica" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetMovimiento">
+    <Key>
+      <PropertyRef Name="idMovimiento" />
+      <PropertyRef Name="idProducto" />
+      <PropertyRef Name="idProveedor" />
+    </Key>
+    <Property Name="idMovimiento" Type="int" Nullable="false" />
+    <Property Name="idProducto" Type="int" Nullable="false" />
+    <Property Name="idProveedor" Type="int" Nullable="false" />
+    <Property Name="idSucursal" Type="int" Nullable="false" />
+    <Property Name="idUsuario" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="observacion" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Movimiento">
+    <Key>
+      <PropertyRef Name="idMovimiento" />
+    </Key>
+    <Property Name="idMovimiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idTipoMovimiento" Type="int" Nullable="false" />
+    <Property Name="idConcepto" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="idProducto" />
+    </Key>
+    <Property Name="idProducto" Type="int" Nullable="false" />
+    <Property Name="idBotanica" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="costoUnitario" Type="int" Nullable="false" />
+    <Property Name="cantidadMinima" Type="int" Nullable="false" />
+    <Property Name="cantidadTotal" Type="int" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Producto_proveedor">
+    <Key>
+      <PropertyRef Name="idProducto" />
+      <PropertyRef Name="idProveedor" />
+    </Key>
+    <Property Name="idProducto" Type="int" Nullable="false" />
+    <Property Name="idProveedor" Type="int" Nullable="false" />
+    <Property Name="activo" Type="int" />
+  </EntityType>
+  <EntityType Name="Proveedor">
+    <Key>
+      <PropertyRef Name="idProveedor" />
+    </Key>
+    <Property Name="idProveedor" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="pais" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegistroMovimiento">
+    <Key>
+      <PropertyRef Name="idRegistro" />
+    </Key>
+    <Property Name="idRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idMovimiento" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="idRol" />
+    </Key>
+    <Property Name="idRol" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sucursal">
+    <Key>
+      <PropertyRef Name="idSucursal" />
+    </Key>
+    <Property Name="idSucursal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ubicacion" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="activa" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TipoMovimiento">
+    <Key>
+      <PropertyRef Name="idTipoMovimiento" />
+      <PropertyRef Name="idConcepto" />
+    </Key>
+    <Property Name="idTipoMovimiento" Type="int" Nullable="false" />
+    <Property Name="idConcepto" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ubicacion">
+    <Key>
+      <PropertyRef Name="idProducto" />
+      <PropertyRef Name="idSucursal" />
+    </Key>
+    <Property Name="idProducto" Type="int" Nullable="false" />
+    <Property Name="idSucursal" Type="int" Nullable="false" />
+    <Property Name="activo" Type="int" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="int" Nullable="false" />
+    <Property Name="idRol" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="clave" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="habilitado" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Agente_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+    <End Role="Agente" Type="Self.Agente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Agente">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetMovimiento_Movimiento1">
+    <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="1" />
+    <End Role="DetMovimiento" Type="Self.DetMovimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movimiento">
+        <PropertyRef Name="idMovimiento" />
+      </Principal>
+      <Dependent Role="DetMovimiento">
+        <PropertyRef Name="idMovimiento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetMovimiento_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="DetMovimiento" Type="Self.DetMovimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="DetMovimiento">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetMovimiento_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+    <End Role="DetMovimiento" Type="Self.DetMovimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="DetMovimiento">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetMovimiento_Sucursal">
+    <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+    <End Role="DetMovimiento" Type="Self.DetMovimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursal">
+        <PropertyRef Name="idSucursal" />
+      </Principal>
+      <Dependent Role="DetMovimiento">
+        <PropertyRef Name="idSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetMovimiento_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="DetMovimiento" Type="Self.DetMovimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="DetMovimiento">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inventario_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="Producto_proveedor" Type="Self.Producto_proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="Producto_proveedor">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inventario_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+    <End Role="Producto_proveedor" Type="Self.Producto_proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Principal>
+      <Dependent Role="Producto_proveedor">
+        <PropertyRef Name="idProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Movimiento_TipoMovimiento">
+    <End Role="TipoMovimiento" Type="Self.TipoMovimiento" Multiplicity="1" />
+    <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMovimiento">
+        <PropertyRef Name="idTipoMovimiento" />
+        <PropertyRef Name="idConcepto" />
+      </Principal>
+      <Dependent Role="Movimiento">
+        <PropertyRef Name="idTipoMovimiento" />
+        <PropertyRef Name="idConcepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Producto_Botanica">
+    <End Role="Botanica" Type="Self.Botanica" Multiplicity="1" />
+    <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Botanica">
+        <PropertyRef Name="idBotanica" />
+      </Principal>
+      <Dependent Role="Producto">
+        <PropertyRef Name="idBotanica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegistroMovimiento_Movimiento">
+    <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="1" />
+    <End Role="RegistroMovimiento" Type="Self.RegistroMovimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movimiento">
+        <PropertyRef Name="idMovimiento" />
+      </Principal>
+      <Dependent Role="RegistroMovimiento">
+        <PropertyRef Name="idMovimiento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ubicacion_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="Ubicacion" Type="Self.Ubicacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="Ubicacion">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ubicacion_Sucursal">
+    <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+    <End Role="Ubicacion" Type="Self.Ubicacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursal">
+        <PropertyRef Name="idSucursal" />
+      </Principal>
+      <Dependent Role="Ubicacion">
+        <PropertyRef Name="idSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="idRol" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="idRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DeLaHuertaDBModelStoreContainer">
+    <EntitySet Name="Agente" EntityType="Self.Agente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Botanica" EntityType="Self.Botanica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetMovimiento" EntityType="Self.DetMovimiento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Movimiento" EntityType="Self.Movimiento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto_proveedor" EntityType="Self.Producto_proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegistroMovimiento" EntityType="Self.RegistroMovimiento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sucursal" EntityType="Self.Sucursal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoMovimiento" EntityType="Self.TipoMovimiento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ubicacion" EntityType="Self.Ubicacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Agente_Proveedor" Association="Self.FK_Agente_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Agente" EntitySet="Agente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetMovimiento_Movimiento1" Association="Self.FK_DetMovimiento_Movimiento1">
+      <End Role="Movimiento" EntitySet="Movimiento" />
+      <End Role="DetMovimiento" EntitySet="DetMovimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetMovimiento_Producto" Association="Self.FK_DetMovimiento_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="DetMovimiento" EntitySet="DetMovimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetMovimiento_Proveedor" Association="Self.FK_DetMovimiento_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="DetMovimiento" EntitySet="DetMovimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetMovimiento_Sucursal" Association="Self.FK_DetMovimiento_Sucursal">
+      <End Role="Sucursal" EntitySet="Sucursal" />
+      <End Role="DetMovimiento" EntitySet="DetMovimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetMovimiento_Usuario" Association="Self.FK_DetMovimiento_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="DetMovimiento" EntitySet="DetMovimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventario_Producto" Association="Self.FK_Inventario_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Producto_proveedor" EntitySet="Producto_proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventario_Proveedor" Association="Self.FK_Inventario_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Producto_proveedor" EntitySet="Producto_proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Movimiento_TipoMovimiento" Association="Self.FK_Movimiento_TipoMovimiento">
+      <End Role="TipoMovimiento" EntitySet="TipoMovimiento" />
+      <End Role="Movimiento" EntitySet="Movimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Producto_Botanica" Association="Self.FK_Producto_Botanica">
+      <End Role="Botanica" EntitySet="Botanica" />
+      <End Role="Producto" EntitySet="Producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegistroMovimiento_Movimiento" Association="Self.FK_RegistroMovimiento_Movimiento">
+      <End Role="Movimiento" EntitySet="Movimiento" />
+      <End Role="RegistroMovimiento" EntitySet="RegistroMovimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ubicacion_Producto" Association="Self.FK_Ubicacion_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Ubicacion" EntitySet="Ubicacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ubicacion_Sucursal" Association="Self.FK_Ubicacion_Sucursal">
+      <End Role="Sucursal" EntitySet="Sucursal" />
+      <End Role="Ubicacion" EntitySet="Ubicacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

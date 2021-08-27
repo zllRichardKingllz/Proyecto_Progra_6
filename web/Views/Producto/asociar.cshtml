@@ -1,0 +1,245 @@
+﻿@model Infraestructure.Models.Producto
+
+
+@{
+    ViewBag.Title = "asociar";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mantenimiento Producto</title>
+    <link rel="stylesheet" href="~/Content/mantProducto.css" type="text/css">
+    <style>
+        .nav {
+            background-color: #238926;
+            border-radius: 4px;
+            font-size: 24px;
+            margin-top: 5%;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        .nav > li {
+            float: left;
+        }
+
+        .nav li a {
+            background-color: #238926;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 12px;
+            display: block;
+        }
+
+            .nav li a:hover {
+                text-decoration: none;
+                background-color: greenyellow;
+            }
+
+        .nav li ul {
+            display: none;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .nav li:hover > ul {
+            display: block;
+            margin-left: -40px !important;
+        }
+
+        .nav li ul li {
+            position: relative;
+            font-size: 16px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            width: 180px;
+        }
+
+        #usuario {
+            margin-left: 82%;
+        }
+
+            #usuario ul li {
+                font-size: 14px;
+                width: 120px;
+            }
+    </style>
+</head>
+<body onload="CONFIRMADO()">
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <center><h1>Formulario</h1></center>
+            <center>
+                <p>
+                    Acá podrás asociar, cambiar y eliminar, tanto sucursales como proveedores a los productos ya registrados con anterioridad.
+                </p>
+            </center>
+            <center>
+                <form id="formProd">
+                    @Html.AntiForgeryToken()
+                    <label for="idProducto">Codigo Producto</label>
+                    <div>
+                        @Html.DropDownListFor(model => model.idProducto, (SelectList)ViewBag.PRODUCTOS, "-- Selecciona producto --", new { @class = "form-control", @id = "idProducto", @name = "idProducto", style = "width: 60%;" })
+                    </div>
+                    <label for="idProveedor">Proveedor</label>
+                    <div>
+                        @Html.DropDownListFor(model => model.Producto_proveedor, (SelectList)ViewBag.IDPROVEDOR, "-- Selecciona proveedor --", new { @class = "form-control", @id = "idProveedor", @name = "idProveedor", style = "width: 60%;" })
+                    </div>
+                    <label for="idSucursal">Sucursal</label>
+                    <div>
+                        @Html.DropDownListFor(model => model.Ubicacion, (SelectList)ViewBag.IDSUCURSAL, "-- Selecciona sucursal --", new { @class = "form-control", @id = "idSucursal", @name = "idSucursal", style = "width: 60%;" })
+                    </div>
+                    <p style="color: lawngreen; display: none" id="msg">Datos correctos, presiona nuevamente confirmar</p>
+                    <div id="divBtn" style="margin-top:2%;">
+                        <button type="button" style="margin-bottom: 3%; font-size: 24px; width: 20%;" onclick="location.href = '@Url.Action("listadoProducto", "Producto")'" id="btnRegresar">Regresar</button>
+                        <button type="button" style="font-size: 24px; width: 20%;" onclick="validaciones()" id="btnConfirmar">Validar</button>
+                        <button type="submit" style="font-size: 24px; width: 20%; display: none;" onclick="asociar()" id="btnConfirmar2">Confirmar</button>
+                    </div>
+                </form>
+            </center>
+        </section>
+    </main>
+    <script>
+        function CONFIRMADO() {
+        let resp = "@((string)ViewBag.CONFIRMADO)";
+            if (resp !== null && resp !== '') {
+                swal({
+                    title: "¡Enhorabuena!",
+                    text: "¡Transacción realizada con éxito!",
+                    type: "success",
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: "OK",
+                });
+            }
+        }
+        function asociar() {
+            let idSucursal = document.getElementById("idSucursal").value;
+            let idProveedor = document.getElementById("idProveedor").value;
+
+            var data = {
+                objProducto: {
+                    idProducto: $("#idProducto").val()
+                },
+                objSucursal: {
+                    idSucursal: $("#idSucursal").val()
+                },
+                objProveedor: {
+                    idProveedor: $("#idProveedor").val()
+                }
+            }
+
+            if (idSucursal == 0) {
+                $.ajax({
+                    method: 'POST',
+                    url: '@Url.Action("asociarProveedor", "Producto")',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                });
+            } else {
+                if (idProveedor == 0) {
+                    $.ajax({
+                    method: 'POST',
+                    url: '@Url.Action("asociarSucursal", "Producto")',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                });
+                } else {
+                    $.ajax({
+                    method: 'POST',
+                    url: '@Url.Action("asociarAmbos", "Producto")',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                });
+                }
+            }
+        }
+        function validaciones() {
+            let btn1 = document.getElementById("btnConfirmar");
+            let btn2 = document.getElementById("btnConfirmar2");
+            let msg = document.getElementById("msg");
+
+            if (combo() == false ) {
+                swal({
+                    title: "¡Oops!",
+                    text: "¡Antes selecciona un producto y minimo una ubicación o un proveedor!",
+                    type: "error",
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: "OK",
+                });
+            } else {
+                btn1.style.display = "none";
+                btn2.style.display = "inline";
+                msg.style.display = "inline";
+            }
+        }
+        function combo() {
+            let idSucursal = document.getElementById("idSucursal").value;
+            let idProveedor = document.getElementById("idProveedor").value;
+            let idProducto = document.getElementById("idProducto").value;
+
+            if (idSucursal == 0 && idProveedor == 0) {
+                return false;
+            }
+            if (idProveedor == 0 && idSucursal == 0) {
+                return false;
+            }
+            if (idProducto == 0) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

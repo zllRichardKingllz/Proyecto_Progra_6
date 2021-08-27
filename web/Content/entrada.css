@@ -1,0 +1,144 @@
+﻿* {
+    margin: 0%;
+    padding: 0%;
+}
+
+body {
+    background-image: url(https://cdn.wallpapersafari.com/83/63/IqE0SP.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    font-size: 18.5px;
+}
+.nav {
+    background-color: #238926;
+    border-radius: 4px;
+    font-size: 24px;
+    margin-top: 5%;
+}
+
+ul, ol {
+    list-style: none;
+}
+.nav > li {
+    float: left;
+}
+
+.nav li a {
+    background-color: #238926;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 12px;
+    display: block;
+}
+
+    .nav li a:hover {
+        text-decoration: none;
+        background-color: greenyellow;
+    }
+
+.nav li ul {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.nav li:hover > ul {
+    display: block;
+}
+
+.nav li ul li {
+    position: relative;
+    font-size: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 180px;
+}
+#usuario {
+    margin-left: 22%;
+}
+    #usuario ul li {
+        font-size: 14px;
+        width: 120px;
+    }
+
+section {
+    background-color: rgba(0, 255, 130, 0.9);
+    width: 100%;    
+}
+
+form {
+    margin: 2%;
+    margin-left: 4%;
+    font-size: 14px;
+    color: black;
+    margin-top: -0.2%;
+}
+
+article {
+    margin-left: 28%;
+    margin-top: -49%;
+    padding-bottom: 2%;
+    font-size: 20px;
+    padding-right: 3%;
+}
+
+#divBtn {
+    margin-left: 7.2%;
+}
+
+button {
+    font-size: 20px;
+    color: black;
+}
+
+    button:hover {
+        background-color: aquamarine;
+    }
+
+input {
+    height: 20px;
+    text-align: center !important;
+}
+
+select {
+    font-size: 20px;
+    color: black;
+    text-decoration-color: black;
+    text-align: center !important;
+}
+#divRegistro{
+    margin-left: 3%;
+}
+table {
+    color: black;
+    font-size: 15.1px;
+    text-align: center !important;
+}
+tr > th{
+    font-size: 18px;
+}
+.my-custom-scrollbar {
+    position: relative;
+    height: 460px;
+    width: 100%;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #fff;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+    background-color: rgba(0, 111, 237, 0.78);
+}
+
+.table-striped > thead > tr > th {
+    background-color: rgba(0, 111, 237, 0.78);
+}

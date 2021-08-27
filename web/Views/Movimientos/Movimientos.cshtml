@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Infraestructure.Models.DetMovimiento>
+
+@{
+    ViewBag.Title = "Movimientos";
+}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Movimientos inventario</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/movimientos.css" type="text/css">
+</head>
+<body>
+
+    <main>
+        <header>
+            <ul class="nav">
+                <li>@Html.ActionLink("Inicio", "index", "home")</li>
+                <li>@Html.ActionLink("Inventario", "inventario", "home")</li>
+                <li id="usuario">
+                    @{
+                        string nombre = "Perfil";
+                        int idUsuario = 207870114;
+                        Infraestructure.Models.Usuario oUsuario;
+                        //Validar si existe en la sesión
+                        if (Session["User"] != null)
+                        {
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                nombre = $"{oUsuario.nombre}";
+                                idUsuario = oUsuario.idUsuario;
+                            }
+                        }
+                    }
+                    <a data-toggle="dropdown" href="#" role="button">@nombre</a>
+                    <ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("" + idUsuario, "Index")</li>
+
+                        }
+                        @if (Session["User"] == null)
+                        {
+                            @Html.ActionLink("Ingresar", "Index", "Usuario", null, new { @style = "font-size: 20px;" })
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "dropdown-item " })</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <div id="titleSection">
+                <h2>Movimientos</h2>
+                <p>Detalla nuestra actividad diaria</p>
+            </div>
+            <div id="divProd" class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr style="color: #fff;">
+                            <th>
+                                #Movimiento
+                            </th>
+                            <th>
+                                Tipo
+                            </th>
+                            <th>
+                                Fecha
+                            </th>
+                            <th>
+                                Cantidad
+                            </th>
+                            <th>
+                                Observación
+                            </th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+                        var tipo = "";
+                        <tr>
+                            <td>
+                                <center>@Html.DisplayFor(modelItem => item.idMovimiento)</center>
+                            </td>
+                            <td>
+                                @if (@Html.DisplayFor(modelItem => item.Movimiento.idTipoMovimiento).ToString().Equals("1") == true)
+                                {
+                                    tipo = "Entrada";
+                                }
+                                else
+                                {
+                                    tipo = "Salida";
+                                }
+                                @tipo
+                            </td>
+                            <td>                                
+                                <center>@Html.DisplayFor(modelItem => item.Movimiento.fecha)</center>
+                            </td>
+                            <td>
+                                <center>@Html.DisplayFor(modelItem => item.cantidad)</center>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.observacion)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+

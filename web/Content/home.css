@@ -1,0 +1,84 @@
+﻿* {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    background-image: url(https://clipartart.com/images/vegetable-clipart-border-free-5.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+section{
+    background-color: white;
+}
+.nav {
+    background-color: #238926;
+    border-radius: 4px;
+    font-size: 24px;   
+    margin-top: 5% !important;
+}
+ul, ol {
+    list-style: none;
+}
+
+.nav > li {
+    float: left;    
+}
+
+.nav li a {
+    background-color: #238926;    
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 12px;
+    display: block;
+}
+
+    .nav li a:hover {
+        text-decoration: none;
+        background-color: greenyellow;
+    }
+
+.nav li ul {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.nav li:hover > ul {
+    display: block;
+}
+
+.nav li ul li {
+    position: relative;
+    font-size: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 180px;
+}
+#usuario {
+    margin-left: 22%;
+}
+    #usuario ul li {
+        font-size: 14px;
+        width:130%;
+    }
+footer{
+    background-color: white;
+}
+p{
+    font-size: 24px;
+    width: 95%;
+    margin-left: 3%;
+    margin-top:3%;
+}
+#pfooter{
+    margin: 0%;
+    padding: 0%;
+    font-size:14px;
+}
+#container{
+    width:45%;
+    position:absolute;
+    margin-left: 15%;
+    margin-top: -13%;
+}

@@ -1,0 +1,144 @@
+﻿* {
+    margin: 0%;
+    padding: 0%;
+}
+
+body {
+    background-image: url(../img/salidasback1920x1080.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    font-size: 20px;
+    color: black;
+}
+main{
+    margin-left: 0%;
+}
+.nav {
+    background-color: #238926;
+    border-radius: 4px;
+    font-size: 24px;
+    margin-top: 5%;
+}
+
+ul, ol {
+    list-style: none;
+}
+.nav > li {
+    float: left;
+}
+
+.nav li a {
+    background-color: #238926;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 12px;
+    display: block;
+}
+
+    .nav li a:hover {
+        text-decoration: none;
+        background-color: greenyellow;
+    }
+
+.nav li ul {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.nav li:hover > ul {
+    display: block;
+}
+
+.nav li ul li {
+    position: relative;
+    font-size: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 180px;
+}
+#usuario {
+    margin-left: 22%;
+}
+    #usuario ul li {
+        font-size: 14px;
+        width: 120px;
+    }
+
+section {
+    background-color: rgba(246, 246, 0, 0.8);
+    width: 100%;
+}
+
+form {
+    margin: 2%;
+    margin-left: 6%;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.73) !important;
+}
+
+article {
+    margin-left: 3.5%;
+    padding-bottom: 1%;
+    margin-top: -1%;
+}
+
+button {
+    font-size: 20px;
+    color: black;
+}
+
+    button:hover {
+        background-color: aquamarine;
+    }
+
+input {
+    text-align: center !important;
+}
+
+select {
+    font-size: 20px;
+    color: black;
+    text-decoration-color: black;
+    text-align: center !important;
+}
+
+#divRegistro {
+    margin-left: 3%;
+}
+
+table {
+    color: black;
+    font-size: 15.1px;
+    text-align: center !important;
+}
+
+tr > th {
+    font-size: 18px;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 250px;
+    width: 94.8%;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #fff;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+    background-color: darkturquoise;
+}
+
+.table-striped > thead > tr > th {
+    background-color: darkturquoise;
+}

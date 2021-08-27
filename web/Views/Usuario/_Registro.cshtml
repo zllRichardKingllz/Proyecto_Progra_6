@@ -1,0 +1,123 @@
+﻿@model Infraestructure.Models.Usuario
+
+    @using (Html.BeginForm("GuardarUsuario", "Usuario", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="f" class="form-horizontal" style="margin-left: 0%; margin-top: -15%; width: 60%; background-color: rgba(0, 0, 0, 0.2);">
+            <h1 style="margin-left: 35%; color: #fff !important;">Registro</h1>
+            <p style="font-size: 20px; margin-left: 3%; color: #fff !important;">Acá podrás registrar tus datos, para así lograr utilizar la aplicación. <br> PD: El administrador antes deberá aprobar tu solicitud para que puedas ingresar al sistema.</p>
+            <form id="formRegistro">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <label for="idUsuario" style=" margin-left: 3%; color: #fff !important;">Cedula</label>
+                <div>
+                    @Html.EditorFor(model => model.idUsuario, new { htmlAttributes = new { @class = "form-control", @id = "idUsuario", @name = "idUsuario", @Type = "text", @style = "width: 90% !important; height: 30px !important; margin-left: 3%;" } })
+                </div>
+                <label for="nombre" style=" margin-left: 3%; color: #fff !important;">Nombre</label>
+                <div>
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @id = "nombre", @name = "nombre", @Type = "text", @style = "width: 90% !important; height: 30px !important; margin-left: 3%;" } })
+                </div>
+                <label for="clave" style="margin-top: 1%; margin-left: 3%; color: #fff !important;">Contraseña</label>
+                <div>
+                    @Html.EditorFor(model => model.clave, new { htmlAttributes = new { @class = "form-control", @id = "clave", @name = "clave", @Type = "password", @style = "width: 90% !important; height: 30px !important; color: black; margin-left: 3%;" } })
+                </div>
+                @* Rol 0 mediante el js posterior, el administrador debe de asignar el rol dentro del sistema. *@
+                <div>
+                    @Html.EditorFor(model => model.idRol, new { htmlAttributes = new { @class = "form-control", @id = "idRol", @name = "idRol", @Type = "text", @style = "display:none;" } })
+                </div>
+                @* Habilitado 0 mediante el js posterior, el administrador debe de habilitar al usuario para que este pueda utilizar el sistema. *@
+                <div>
+                    @Html.EditorFor(model => model.habilitado, new { htmlAttributes = new { @class = "form-control", @id = "activo", @name = "activo", @Type = "text", @style = "display:none;" } })
+                </div>
+                <p style="color: lawngreen; display: none; font-size: 20px !important; margin-left: 3%;" id="msg">Datos correctos, presiona nuevamente confirmar</p>
+                <div id="divBtn" style="color: black;">
+                    <button type="button" onclick="location.href = '@Url.Action("Index", "Usuario")'" style="font-size: 24px; margin-left: 45%;">Regresar</button>
+                    <button type="button" style="font-size: 24px; width: 24%;" onclick="validaciones()" id="btnConfirmar">Validar</button>
+                    <button type="submit" style="font-size: 24px; width: 24%; display: none;" id="btnConfirmar2">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    }
+    <script>
+        function validaciones() {
+            let btn1 = document.getElementById("btnConfirmar");
+            let btn2 = document.getElementById("btnConfirmar2");
+            let msg = document.getElementById("msg");
+            let rol = document.getElementById("idRol");
+            let activo = document.getElementById("activo");
+
+            if (vacio() == false) {
+                swal({
+                    title: "¡Oops!",
+                    text: "¡Antes rellena todos los campos!",
+                    type: "error",
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: "OK",
+                });
+            } else {
+                if (numeros() == false) {
+                    swal({
+                        title: "¡Oops!",
+                        text: "¡Solo se permiten numeros en tu numero de cédula!",
+                        type: "error",
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: "OK",
+                    });
+                } else {
+                    if (letras() == false) {
+                        swal({
+                            title: "¡Oops!",
+                            text: "¡Solo se permiten letras en tu nombre!",
+                            type: "error",
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: "OK",
+                        });
+                    } else {
+                        btn1.style.display = "none";
+                        btn2.style.display = "inline";
+                        msg.style.display = "inline";
+                        rol.value = 4;
+                        activo.value = 0;
+                    }
+                }
+            }
+        }
+        function numeros() {
+            let idUser = document.getElementById("idUsuario").value;
+
+            if (isNaN(idUser)) {
+                return false;
+            }
+            return true;
+        }
+        function letras() {
+            let letras = /^[A-Z][a-zÁÉÍÓÚáéíóúñÑ\s]+$/i;
+            let nombre = document.getElementById("nombre").value;
+
+            if (!letras.test(nombre)) {
+                return false;
+            }
+            return true;
+        }
+        function vacio() {
+            let idUser = document.getElementById("idUsuario").value;
+            let nom = document.getElementById("nombre").value;
+            let clave = document.getElementById("clave").value;
+
+            if (idUser == null || idUser.length == 0) {
+                return false;
+            }
+            if (clave == null || clave.length == 0) {
+                return false;
+            }
+            if (nom == null || nom.length == 0) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryajax")
+}
+
